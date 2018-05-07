@@ -3,73 +3,28 @@ workflows:
   version: 2
   tests:
     jobs: &workflow_jobs
-      - node4:
-          filters:
-            tags:
-              only: /.*/
-      - node6:
-          filters:
-            tags:
-              only: /.*/
       - node8:
-          filters:
-            tags:
-              only: /.*/
-      - node9:
-          filters:
-            tags:
-              only: /.*/
-      - node10:
           filters:
             tags:
               only: /.*/
       - lint:
           requires:
-            - node4
-            - node6
             - node8
-            - node9
-            - node10
-          filters:
-            tags:
-              only: /.*/
-      - docs:
-          requires:
-            - node4
-            - node6
-            - node8
-            - node9
-            - node10
           filters:
             tags:
               only: /.*/
       - system_tests:
           requires:
             - lint
-            - docs
           filters:
-            branches:
-              only: master
             tags:
-              only: '/^v[\d.]+$/'
+              only: /.*/
       - sample_tests:
           requires:
             - lint
-            - docs
           filters:
-            branches:
-              only: master
             tags:
-              only: '/^v[\d.]+$/'
-      - publish_npm:
-          requires:
-            - system_tests
-            - sample_tests
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: '/^v[\d.]+$/'
+              only: /.*/
   nightly:
     triggers:
       - schedule:
