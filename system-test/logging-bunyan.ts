@@ -132,6 +132,7 @@ describe('LoggingBunyan', () => {
           (err: Error, entries: types.StackdriverEntry[]) => {
             assert.ifError(err);
             assert.strictEqual(entries.length, testData.length);
+            assert.strictEqual(testData.length, 3);
 
             // Make sure entries are valid and are in the correct order.
             entries.reverse().forEach((entry, index) => {
